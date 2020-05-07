@@ -18,3 +18,5 @@ const UserSchema = new Schema({
     default: Date.now()
   }
 });
+
+module.exports = model('User', UserSchema);
