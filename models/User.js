@@ -34,14 +34,13 @@ UserSchema.pre('save', async function (next) {
       next(e);
     }
   }
-  console.log(hash);
-  console.log(salt);
 //  overwrite the plain text password with our hash
   user.password = hash;
   console.log(user.password);
   // Finally call save
   next();
 });
+
 
 // The candidate password is the password that the user is providing us when they try to sign in
 UserSchema.methods.comparePassword = async function(candidatePassword) {

@@ -44,7 +44,6 @@ const localLogin = new LocalStrategy(localOptions, async (email, password, done)
     // bcrypt will then automatically hash the given password and compare it to the
     // Hashed password in the database
     const isMatch = await user.comparePassword(password);
-
     // If the password they gave us after it is hashed is equal to the hashed
     // password isMatch will be true, otherwise it will be false
     if (!isMatch) {

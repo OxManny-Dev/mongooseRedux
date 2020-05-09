@@ -6,6 +6,7 @@ const { requireSignIn } = require('./../../../middlewares/authMiddleware');
 
 router.post('/signup', signup);
 
+
 router.post('/signin', requireSignIn, signin);
 
 module.exports = router;
