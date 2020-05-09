@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Setup routes
 app.use(routes);
+require('./services/passport');
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/todo_db', { useNewUrlParser: true,  useUnifiedTopology: true  });
 

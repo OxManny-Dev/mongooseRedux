@@ -10,7 +10,6 @@ const jwtOptions = {
   secretOrKey: secret
 };
 
-
 const jwtAuth = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
     const user = await User.findById(payload.sub);
@@ -24,5 +23,7 @@ const jwtAuth = new JwtStrategy(jwtOptions, async (payload, done) => {
 });
 
 
+// We are letting passport know that they can now authenticate users using 'jwt' as their string
+// when they call passport.authenticate('jwt')
 passport.use(jwtAuth);
 
