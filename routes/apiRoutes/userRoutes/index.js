@@ -7,6 +7,6 @@ router.route('/todos')
   .post(requireAuth, addTodo);
 
 // /api/user/emails
-router.get('/emails', getAllUserEmails);
+router.get('/emails', requireAuth, getAllUserEmails);
 
 module.exports = router;
