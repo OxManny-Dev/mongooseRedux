@@ -22,24 +22,23 @@ const UserSchema = new Schema({
 });
 
 
-// UserSchema.pre('save', async function (next) {
-//   const user = this;
-//   let salt;
-//   let hash;
-//   if (user.isModified('password')) {
-//     try {
-//       salt = await bcrypt.genSalt();
-//       hash = await bcrypt.hash(user.password, salt);
-//     } catch (e) {
-//       next(e);
-//     }
-//   }
-//
-// //  overwrite the plain text password with our hash
-//   user.password = hash;
-//   // Finally call save
-//   next();
-// });
+UserSchema.pre('save', async function (next) {
+  const user = this;
+
+  if (user.isModified('password')) {
+    try {
+      let salt = await bcrypt.genSalt();
+      let hash = await bcrypt.hash(user.password, salt);
+      user.password = hash;
+      // Finally call save
+      next();
+    } catch (e) {
+      next(e);
+    }
+  }
+  next();
+//  overwrite the plain text password with our hash
+});
 
 
 // The candidate password is the password that the user is providing us when they try to sign in
