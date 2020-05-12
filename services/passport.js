@@ -5,6 +5,7 @@ const { secret } = require('./../config');
 
 const User = require('./../models/User');
 
+
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
   secretOrKey: secret
@@ -29,9 +30,10 @@ const jwtAuth = new JwtStrategy(jwtOptions, async (payload, done) => {
 // Look for the email from property in the request instead.
 const localOptions = { usernameField: 'email' };
 
+
+
 // Create a local strategy for users trying to sign in with email and password
 const localLogin = new LocalStrategy(localOptions, async (email, password, done) => {
-
   try {
   //   See if there's a user with the given email in our database
     const user = await User.findOne({ email });

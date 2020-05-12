@@ -18,28 +18,28 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now()
   },
-  todos: [ {type: Schema.Types.ObjectId, ref: 'Todo'} ]
+  todos: [ {type: Schema.Types.ObjectId, ref: 'Todo'} ],
 });
 
 
-UserSchema.pre('save', async function (next) {
-  const user = this;
-  let salt;
-  let hash;
-  if (user.isModified('password')) {
-    try {
-      salt = await bcrypt.genSalt();
-      hash = await bcrypt.hash(user.password, salt);
-    } catch (e) {
-      next(e);
-    }
-  }
-//  overwrite the plain text password with our hash
-  user.password = hash;
-  console.log(user.password);
-  // Finally call save
-  next();
-});
+// UserSchema.pre('save', async function (next) {
+//   const user = this;
+//   let salt;
+//   let hash;
+//   if (user.isModified('password')) {
+//     try {
+//       salt = await bcrypt.genSalt();
+//       hash = await bcrypt.hash(user.password, salt);
+//     } catch (e) {
+//       next(e);
+//     }
+//   }
+//
+// //  overwrite the plain text password with our hash
+//   user.password = hash;
+//   // Finally call save
+//   next();
+// });
 
 
 // The candidate password is the password that the user is providing us when they try to sign in

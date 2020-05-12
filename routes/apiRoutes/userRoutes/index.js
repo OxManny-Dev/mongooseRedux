@@ -1,10 +1,17 @@
 const router = require('express').Router();
-const { addTodo, getAllUserEmails } = require('./../../../controllers/userController');
+const { addTodo, getAllUserEmails, getUserTodos, deleteUserTodoById } = require('./../../../controllers/userController');
 const { requireAuth } = require('./../../../middlewares/authMiddleware');
 
-// /api/user/todos
-router.route('/todos')
-  .post(requireAuth, addTodo);
+// /api/user/todo
+router.route('/todo')
+  .post(requireAuth, addTodo)
+  .get(requireAuth, getUserTodos);
+
+
+// /api/user/todo/:todoId
+router.route('/todo/:todoId')
+  .delete(requireAuth, deleteUserTodoById);
+
 
 // /api/user/emails
 router.get('/emails',  getAllUserEmails);
