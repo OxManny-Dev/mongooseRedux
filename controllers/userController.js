@@ -21,7 +21,6 @@ module.exports = {
     try {
       const newTodo = await new Todo({text, user: req.user._id}).save();
       req.user.todos.push(newTodo);
-      console.log(req.user);
       await req.user.save();
       return res.status(200).json(newTodo);
     } catch (e) {

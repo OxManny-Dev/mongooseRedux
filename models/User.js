@@ -30,7 +30,6 @@ UserSchema.pre('save', async function (next) {
       let hash = await bcrypt.hash(user.password, salt);
       user.password = hash;
       // Finally call save
-      next();
     } catch (e) {
       next(e);
     }
