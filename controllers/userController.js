@@ -52,5 +52,54 @@ module.exports = {
     } catch (e) {
       return res.status(403).json({ e });
     }
-  }
+  },
+  updateTodoById: async (req, res) => {
+    const { todoId } = req.params;
+    const { text, completed } = req.body;
+    if (!text) {
+      return res.status(400).json({ error: 'You must provide a text' });
+    }
+    try {
+      const todoToUpdate = await Todo.findById(todoId);
+      if (!todoToUpdate) {
+        return res.status(404).json({ error: 'No todo with that id' });
+      }
+      if(req.user._id.toString() !== todoToUpdate.user.toString()) {
+        return res.status(401).json({ error: 'You cannot update a todo that is not yours!' });
+      }
+      const updatedTodo = await Todo.findByIdAndUpdate(todoId,
+        { completed, text },
+        { new: true });
+      return res.status(200).json(updatedTodo);
+    } catch (e) {
+      return res.status(403).json({ e });
+    }
+  },
 };
+
+
+
+
+// Inside of the userController
+// Create a function called 'updateTodoById'
+// expect the todoId from req.params
+// expect the 'text' and 'completed' properties from req.body.
+//   Check if the text field is valid.
+//   If it's not valid, return a status of 400 and a json error that says 'You must provide a text'
+// Attempt to find the todo in the database,
+//   If there is no todo, return a status of 404 and a json error that says "No todo with that Id"
+// Check if the todo belongs to the logged in user
+// If not, return a response with a status of 401 and an error that says "You cannot update a todo that's not yours"
+// If the user makes it past through all of the checks, update the todo's text and completed properties by it's ID.
+//   return a response with the newly updated todo.
+// (By default mongoose will return a todo object before it was updated. Read the documentation on how to return the new version instead)
+// You may use the code below for the catch block
+// return res.status(403)json(e)
+
+/*
+Bonus, wire this up on the router!
+ */
+
+
+
+
